@@ -1564,7 +1564,15 @@ const BasicLayouts: React.FC<BasicLayoutsContentProps> = (props: any) => {
             <Link to="/qualityJudge">质量评价</Link>
           </Menu.Item>
           <Menu.Item key="/exam" icon={<UserOutlined />}>
-            <Link to="/listenTraining">听音训练</Link>
+            <Link
+              to={
+                roles[CookieUtil.get('role') - 1] === '学员'
+                  ? '/answerQuestion'
+                  : '/listenTraining'
+              }
+            >
+              听音训练
+            </Link>
           </Menu.Item>
           <Menu.Item key="/targetRecognition" icon={<RobotOutlined />}>
             <Link to="/targetRecognition">分类识别</Link>
@@ -1828,7 +1836,7 @@ const BasicLayouts: React.FC<BasicLayoutsContentProps> = (props: any) => {
       <Layout>
         <Header style={{ backgroundColor: '#2D2D2D', zIndex: 999, height: 66 }}>
           <div className="logo">
-            <img src={topLogo} alt="水声系统" style={{width: 60}} />
+            <img src={topLogo} alt="水声系统" style={{ width: 60 }} />
             <b>水声工程</b>
           </div>
 
@@ -1870,9 +1878,19 @@ const BasicLayouts: React.FC<BasicLayoutsContentProps> = (props: any) => {
           <Content className="main-content">{props.children}</Content>
         </Layout>
 
-        <Footer style={{ backgroundColor: '#292929', textAlign: 'center', padding: "12px 50px" }}>
-          <div style={{margin: "0 auto", width: 240, fontSize: 20}}>
-            <img src={bottomLogo} alt="海军工程大学" style={{width: 70, marginRight: 16}} />
+        <Footer
+          style={{
+            backgroundColor: '#292929',
+            textAlign: 'center',
+            padding: '12px 50px',
+          }}
+        >
+          <div style={{ margin: '0 auto', width: 240, fontSize: 20 }}>
+            <img
+              src={bottomLogo}
+              alt="海军工程大学"
+              style={{ width: 70, marginRight: 16 }}
+            />
             <b>海军工程大学</b>
           </div>
         </Footer>
