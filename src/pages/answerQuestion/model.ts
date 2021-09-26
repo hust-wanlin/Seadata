@@ -45,6 +45,15 @@ const Model: ModelType = {
       if (data.do_right === 1) {
         message.success('答案正确！');
       } else message.error('答案错误！');
+      // 更新题目列表
+      const newData = yield call(FetchQuestiones, { level: 1 });
+      console.log('获取题目列表', data);
+      if (data) {
+        yield put({
+          type: 'save',
+          payload: newData,
+        });
+      }
     },
     *getSoundUrl({ payload }, { call, put }) {
       const data = yield call(GetSoundUrl, payload);
