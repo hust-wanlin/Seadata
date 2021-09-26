@@ -246,6 +246,7 @@ const AddQuestion: React.FC<AddQuestionProps> = (props) => {
                   name="difficult"
                   initialValue={1}
                   rules={[{ required: true }]}
+                  hidden
                 >
                   <Input />
                 </Form.Item>
