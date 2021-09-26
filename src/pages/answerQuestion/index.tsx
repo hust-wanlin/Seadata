@@ -33,7 +33,7 @@ const studentPage = (props) => {
    * @return {*}
    */
   const commitAnswer = () => {
-    if (unfinishQstState && activeType === '1') {
+    if (unfinishQstState && unfinishQstState.length > 0 && activeType === '1') {
       if (unfinishQstState[unfinishQstID].selected === null) {
         message.info('请选择选项');
         return;
@@ -46,7 +46,7 @@ const studentPage = (props) => {
         },
       });
     }
-    if (wrongQstState && activeType === '3') {
+    if (wrongQstState && wrongQstState.length > 0 && activeType === '3') {
       if (wrongQstState[wrongQstID].selected === null) {
         message.info('请选择选项');
         return;
@@ -113,11 +113,14 @@ const studentPage = (props) => {
       default:
         break;
     }
-    dispatch({
-      type: 'questions/getSoundUrl',
-      payload: { question_id },
-      // payload: { question_id: '15' },
-    });
+    if (question_id) {
+      dispatch({
+        type: 'questions/getSoundUrl',
+        payload: { question_id },
+        // payload: { question_id: '15' },
+      });
+    }
+
     // const { questionDetail } = QuestionList;
   };
 
@@ -202,7 +205,7 @@ const studentPage = (props) => {
           }}
         >
           <TabPane tab="未做题目" key="1">
-            {!(not_judje_list && not_judje_list.length !== 0) ? (
+            {!(not_judje_list && not_judje_list.length > 0) ? (
               <div>未做题目为空</div>
             ) : (
               <div className={style.container}>
@@ -212,7 +215,7 @@ const studentPage = (props) => {
                   </Divider>
                   {/* <Tag color="lime">题目列表</Tag> */}
                   <div className={style.questionNameContainer}>
-                    {unfinishQstState
+                    {unfinishQstState && unfinishQstState.length > 0
                       ? unfinishQstState.map((item, idx) => (
                           <div
                             key={idx}
@@ -279,19 +282,19 @@ const studentPage = (props) => {
                   <Radio.Group
                     onChange={(e) => {
                       console.log('e.target.value', e.target.value);
-                      if (unfinishQstState) {
+                      if (unfinishQstState && unfinishQstState.length > 0) {
                         unfinishQstState[unfinishQstID].selected =
                           e.target.value;
                         setunfinishQstState([...unfinishQstState]);
                       }
                     }}
                     value={
-                      unfinishQstState
+                      unfinishQstState && unfinishQstState.length > 0
                         ? unfinishQstState[unfinishQstID].selected
                         : ''
                     }
                   >
-                    {unfinishQstState
+                    {unfinishQstState && unfinishQstState.length > 0
                       ? letter.map((item, idx) => (
                           <div key={idx}>
                             <Radio
@@ -326,7 +329,7 @@ const studentPage = (props) => {
             )}
           </TabPane>
           <TabPane tab="正确题目" key="2">
-            {!(right_list && right_list.length !== 0) ? (
+            {!(right_list && right_list.length > 0) ? (
               <div>正确题目为空</div>
             ) : (
               <div className={style.container}>
@@ -384,7 +387,11 @@ const studentPage = (props) => {
                     </Tooltip>
                   </div>
                   <Radio.Group
-                    value={right_list ? right_list[correctQstID].correct : ''}
+                    value={
+                      right_list && right_list.length > 0
+                        ? right_list[correctQstID].correct
+                        : ''
+                    }
                   >
                     {right_list
                       ? letter.map((item, idx) => (
@@ -409,7 +416,9 @@ const studentPage = (props) => {
                   <Divider orientation="left">
                     <Tag color="lime">题目解析</Tag>
                     <div>
-                      {right_list ? right_list[correctQstID].analysis : ''}
+                      {right_list && right_list.length > 0
+                        ? right_list[correctQstID].analysis
+                        : ''}
                     </div>
                   </Divider>
                 </div>
@@ -417,7 +426,7 @@ const studentPage = (props) => {
             )}
           </TabPane>
           <TabPane tab="错误题目" key="3">
-            {!(wrong_list && wrong_list.length !== 0) ? (
+            {!(wrong_list && wrong_list.length > 0) ? (
               <div>错误题目为空</div>
             ) : (
               <div className={style.container}>
@@ -426,7 +435,7 @@ const studentPage = (props) => {
                     <Tag color="lime">题目列表</Tag>
                   </Divider>
                   <div className={style.questionNameContainer}>
-                    {wrongQstState
+                    {wrongQstState && wrongQstState.length > 0
                       ? wrongQstState.map((item, idx) => (
                           <div
                             key={idx}
@@ -477,16 +486,18 @@ const studentPage = (props) => {
                   <Radio.Group
                     onChange={(e) => {
                       console.log('e.target.value', e.target.value);
-                      if (wrongQstState) {
+                      if (wrongQstState && wrongQstState.length > 0) {
                         wrongQstState[wrongQstID].selected = e.target.value;
                         setwrongQstState([...wrongQstState]);
                       }
                     }}
                     value={
-                      wrongQstState ? wrongQstState[wrongQstID].selected : ''
+                      wrongQstState && wrongQstState.length > 0
+                        ? wrongQstState[wrongQstID].selected
+                        : ''
                     }
                   >
-                    {wrongQstState
+                    {wrongQstState && wrongQstState.length > 0
                       ? letter.map((item, idx) => (
                           <div key={idx}>
                             <Radio
