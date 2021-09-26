@@ -91,6 +91,9 @@ const AddQuestion: React.FC<AddQuestionProps> = (props) => {
       callback: (res) => {
         console.log('res', res);
         setQuestionList(res);
+        if (res && res.length > 0) {
+          form.setFieldsValue({ ...res[0] });
+        }
       },
     });
   };
