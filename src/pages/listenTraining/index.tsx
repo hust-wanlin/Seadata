@@ -85,7 +85,7 @@ const AddQuestion: React.FC<AddQuestionProps> = (props) => {
   const [soundUrl, setSoundUrl] = useState('');
   const [soundFileList, setSoundFileList] = useState([]);
   const [questionList, setQuestionList] = useState<Object[]>([]);
-  useEffect(() => {
+  const refreshQuestion = () => {
     dispatch({
       type: 'training/fetchAllQuestions',
       callback: (res) => {
@@ -93,7 +93,8 @@ const AddQuestion: React.FC<AddQuestionProps> = (props) => {
         setQuestionList(res);
       },
     });
-  }, []);
+  };
+  useEffect(refreshQuestion, []);
   const UploadProps = {
     data: { id },
     name: 'audio',
@@ -193,6 +194,7 @@ const AddQuestion: React.FC<AddQuestionProps> = (props) => {
                       fileList: [],
                     });
                     setId('');
+                    refreshQuestion();
                   });
                 }}
                 onFinishFailed={() => {}}
